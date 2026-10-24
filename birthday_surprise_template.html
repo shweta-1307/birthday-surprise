@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Birthday Surprise</title>
+<style>
+:root{--bg:#08090d;--panel:#12141c;--gold:#e7c879;--gold2:#fff0bd;--text:#f7f4ec;--muted:#c5c0b3}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#27202b 0,#08090d 48%,#050608 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{max-width:720px;margin:auto;padding:22px 16px 50px}
+.card{background:rgba(18,20,28,.94);border:1px solid rgba(231,200,121,.35);border-radius:22px;padding:24px 18px;margin:16px 0;box-shadow:0 12px 35px #0007}
+h1,h2{color:var(--gold2);text-align:center;letter-spacing:.04em}
+h1{font-size:clamp(2rem,8vw,3.2rem);margin:12px 0}
+p{text-align:center;line-height:1.65;color:var(--muted)}
+button{border:0;border-radius:999px;background:linear-gradient(120deg,var(--gold),var(--gold2));color:#17130a;font-weight:750;padding:13px 20px;font-size:1rem;cursor:pointer;margin:6px}
+input{display:block;width:100%;max-width:320px;margin:14px auto;padding:13px;border-radius:12px;border:1px solid #a28c55;background:#090a0e;color:white;font-size:1rem}
+.center{text-align:center}
+.hidden{display:none!important}
+.small{font-size:.85rem;color:#a9a49a}
+.hero{font-size:3rem;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.gift{min-height:100px;background:#1b1b23;border:1px solid #78673e;border-radius:16px;color:var(--gold2);padding:16px;font-size:1.1rem}
+.photo{border:1px dashed #8f7b4a;border-radius:16px;padding:20px;text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;color:#d8c995}
+.cake{font-size:5rem;filter:drop-shadow(0 0 12px #e7c87955)}
+footer{text-align:center;color:#8f8b83;font-size:.8rem;padding-top:10px}
+#messageBox{white-space:pre-wrap}
+@media(max-width:420px){.card{padding:20px 14px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<section class="card center" id="lock">
+  <div class="hero">✦ 🎁 ✦</div>
+  <p>YOU HAVE A SECRET SURPRISE</p>
+  <h1>One little birthday mission</h1>
+  <p>Enter the secret code to unlock your surprise.</p>
+  <input id="password" type="password" placeholder="Secret code" autocomplete="off">
+  <button onclick="unlock()">Unlock surprise ✨</button>
+  <p class="small">Hint: replace the sample code in the page before sharing.</p>
+  <p id="error" class="small" role="status"></p>
+</section>
+
+<div id="surprise" class="hidden">
+  <section class="card">
+    <p>THE DAY IS ALL ABOUT YOU</p>
+    <h1>Happy Birthday! 🖤</h1>
+    <p>Wishing you a year full of good surprises, big wins, laughter and unforgettable memories.</p>
+    <div class="hero">🎉 ✨ 🥳 ✨ 🎉</div>
+  </section>
+
+  <section class="card center">
+    <h2>Your virtual cake 🎂</h2>
+    <div class="cake" id="cake">🎂</div>
+    <p id="cakeText">Tap the button to make a wish!</p>
+    <button onclick="cutCake()">Cut the cake 🎂</button>
+    <button onclick="celebrate()">Celebrate 🎉</button>
+    <div id="confetti" class="hero" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <h2>Three little gifts 🎁</h2>
+    <p>Tap each gift to open a message.</p>
+    <div class="grid">
+      <button class="gift" onclick="gift(1)">🎁 Gift One</button>
+      <button class="gift" onclick="gift(2)">🎁 Gift Two</button>
+      <button class="gift" onclick="gift(3)">🎁 Gift Three</button>
+      <button class="gift" onclick="gift(4)">✨ Bonus Gift</button>
+    </div>
+    <p id="giftMessage" aria-live="polite"></p>
+  </section>
+
+  <section class="card">
+    <h2>Birthday memories 📸</h2>
+    <p>Photo spots are placeholders for now. Only add photos you are comfortable sharing on a public website.</p>
+    <div class="grid">
+      <div class="photo">Photo 1<br>add your chosen photo later</div>
+      <div class="photo">Photo 2<br>add your chosen photo later</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>A little message 💌</h2>
+    <p id="messageBox">Happy Birthday! I hope this year brings you happiness, confidence, good health and lots of reasons to smile. Thanks for being a special friend. Have an amazing day! 🖤</p>
+  </section>
+</div>
+<footer>Made with good wishes ✦</footer>
+</main>
+<script>
+/* CHANGE THIS SAMPLE CODE before sharing the page. This is only a fun screen,
+   NOT real security: the code can be found by inspecting the page source. */
+const SECRET_CODE = "BIRTHDAY123";
+function unlock(){
+  const entered=document.getElementById("password").value;
+  if(entered===SECRET_CODE){
+    document.getElementById("lock").classList.add("hidden");
+    document.getElementById("surprise").classList.remove("hidden");
+    window.scrollTo(0,0);
+  }else{
+    document.getElementById("error").textContent="Not quite! Try the secret code again.";
+  }
+}
+function cutCake(){
+  document.getElementById("cake").textContent="🍰";
+  document.getElementById("cakeText").textContent="Cake cut! Make a wish and enjoy your day. ✨";
+}
+function celebrate(){
+  document.getElementById("confetti").textContent="🎉 ✨ 🎊 🥳 🎊 ✨ 🎉";
+  document.getElementById("cakeText").textContent="Birthday mode: ON!";
+}
+function gift(n){
+  const messages={
+    1:"Gift 1: A year full of happiness and peace. 🖤",
+    2:"Gift 2: Keep chasing your goals—you can do great things. ✨",
+    3:"Gift 3: More laughter, good memories and fun ahead. 🎉",
+    4:"Bonus gift: Never forget that your friendship is appreciated. 💌"
+  };
+  document.getElementById("giftMessage").textContent=messages[n];
+}
+</script>
+</body>
+</html>
