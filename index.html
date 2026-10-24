@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Birthday Surprise ✨</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#fff4d1;font-family:Georgia,serif;text-align:center}
+section{min-height:100vh;padding:35px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hidden{display:none!important}
+h1,h2{color:#e7c56a}
+h1{font-size:clamp(2rem,8vw,3.5rem);margin:15px 0}
+p{line-height:1.7;max-width:550px}
+.gold{color:#e7c56a}
+input{padding:14px;border:1px solid #c7a44a;background:#17130b;color:white;border-radius:8px;width:min(280px,90%)}
+button{padding:12px 20px;margin:8px;background:#d8b45b;color:#15100a;border:0;border-radius:25px;font-weight:bold;cursor:pointer}
+button:hover{background:#ffe49a}
+.card{border:1px solid #9e7b32;background:#111;border-radius:18px;padding:24px;max-width:550px;width:100%;box-shadow:0 0 30px #c69b3220}
+.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:500px;margin:18px auto}
+.photo{height:170px;border:1px dashed #c9a64d;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#d8b45b;background:#17130d;padding:10px;font-size:14px}
+.cake{font-size:100px;animation:bob 1.6s infinite ease-in-out}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.gifts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.gift{font-size:42px;background:#17130d;border:1px solid #8c6a2a;border-radius:14px;padding:15px;cursor:pointer}
+#message{white-space:pre-line}
+footer{color:#927b49;font-size:12px;margin-top:25px}
+</style>
+</head>
+<body>
+
+<section id="lock">
+<div class="card">
+<div style="font-size:48px">✦ 🎁 ✦</div>
+<p class="gold">A LITTLE SOMETHING JUST FOR YOU</p>
+<h1>You're Invited!</h1>
+<p>A special surprise is waiting behind this little golden door.</p>
+<input id="pass" type="password" placeholder="Enter your secret password">
+<br><button onclick="unlock()">Unlock Your Surprise ✨</button>
+<p id="error" style="color:#ff9a8b"></p>
+<p style="font-size:12px;color:#99865b">Hint: BIRTHDAY123</p>
+</div>
+</section>
+
+<section id="welcome" class="hidden">
+<p class="gold">✦ MADE WITH LOVE ✦</p>
+<h1>Happy Birthday! 🎂</h1>
+<p>Today is all about celebrating YOU. Your surprise journey starts here.</p>
+<button onclick="show('cake')">Let's Begin →</button>
+</section>
+
+<section id="cake" class="hidden">
+<p class="gold">CHAPTER ONE</p>
+<h1>Your Birthday Cake</h1>
+<div class="cake" id="cakeEmoji">🎂</div>
+<p id="cakeText">Make a wish, close your eyes, and cut your cake!</p>
+<button onclick="cutCake()">🔪 Cut the Cake</button>
+<button onclick="show('gifts')">Next: Your Gifts →</button>
+</section>
+
+<section id="gifts" class="hidden">
+<p class="gold">CHAPTER TWO</p>
+<h1>Little Gifts, Big Love 🎁</h1>
+<p>Choose each gift to reveal a little surprise.</p>
+<div class="gifts">
+<button class="gift" onclick="gift(0)">🎁</button>
+<button class="gift" onclick="gift(1)">🎁</button>
+<button class="gift" onclick="gift(2)">🎁</button>
+</div>
+<p id="giftText">Your surprises are waiting!</p>
+<button onclick="show('memories')">Next: Our Memories →</button>
+</section>
+
+<section id="memories" class="hidden">
+<p class="gold">CHAPTER THREE</p>
+<h1>Little Memory Gallery 📸</h1>
+<p>Add your favourite photos to make this page personal.</p>
+<div class="photos">
+<div class="photo">📷 Photo 1<br>Replace with your photo</div>
+<div class="photo">📷 Photo 2<br>Replace with your photo</div>
+<div class="photo">📷 Photo 3<br>Replace with your photo</div>
+<div class="photo">📷 Photo 4<br>Replace with your photo</div>
+</div>
+<button onclick="show('final')">One Last Surprise 💛</button>
+</section>
+
+<section id="final" class="hidden">
+<div style="font-size:55px">🌟💛🌟</div>
+<p class="gold">JUST FOR YOU</p>
+<h1>Happy Birthday!</h1>
+<div class="card">
+<p id="message">Wishing you a year full of happiness, laughter, success and beautiful memories.
+
+Thank you for being such a wonderful part of my life. May all the good things you deserve find their way to you.
+
+Keep smiling, keep shining, and never stop being yourself.
+
+Here's to more laughter, more memories and many more birthdays!
+
+— Your friend 💛</p>
+</div>
+<button onclick="celebrate()">A Little More Magic ✨</button>
+<footer>Made with care, just for you.</footer>
+</section>
+
+<script>
+const sections=["lock","welcome","cake","gifts","memories","final"];
+function show(id){
+sections.forEach(s=>document.getElementById(s).classList.add("hidden"));
+document.getElementById(id).classList.remove("hidden");
+window.scrollTo(0,0);
+if(id==="final") celebrate();
+}
+function unlock(){
+if(document.getElementById("pass").value==="BIRTHDAY123"){
+show("welcome"); celebrate();
+}else{
+document.getElementById("error").textContent="Not quite! Try the password hint above 💛";
+}
+}
+function cutCake(){
+document.getElementById("cakeEmoji").textContent="🍰";
+document.getElementById("cakeText").textContent="Cake cut! 🎉 May your wish come true!";
+celebrate();
+}
+const gifts=[
+"💛 Gift 1: May you always have a reason to smile.",
+"🌟 Gift 2: May your dreams grow bigger and come true.",
+"🎉 Gift 3: More adventures, laughter and unforgettable memories await you!"
+];
+function gift(i){
+document.getElementById("giftText").textContent=gifts[i];
+celebrate();
+}
+function celebrate(){
+const emojis=["✨","💛","🎉","⭐","🎊"];
+for(let i=0;i<35;i++){
+const e=document.createElement("span");
+e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+e.style.cssText="position:fixed;left:"+Math.random()*100+"vw;top:-30px;font-size:"+(16+Math.random()*18)+"px;z-index:99;pointer-events:none;transition:transform 2.5s linear,opacity 2.5s linear";
+document.body.appendChild(e);
+requestAnimationFrame(()=>{e.style.transform="translateY("+(window.innerHeight+60)+"px) rotate(500deg)";e.style.opacity="0"});
+setTimeout(()=>e.remove(),2700);
+}
+}
+</script>
+</body>
+</html>
